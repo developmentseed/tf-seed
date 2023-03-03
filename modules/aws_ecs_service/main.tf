@@ -239,6 +239,38 @@ resource "aws_ecs_task_definition" "service" {
   container_definitions    = data.template_file.container_definition.rendered
 }
 
+#######################################################################
+# AWS Distro Open Telemetry (ADOT) Permissions
+#######################################################################
+# give access for AWS OTEL for observability
+# https:aws-otel.github.io/docs/setup/ecs
+# note that all the logging policies were already attached above
+data "aws_iam_policy_document" "api_ecs_to_otel_access" {
+  statement {
+    actions = [
+        "xray:PutTraceSegments",
+        "xray:PutTelemetryRecords",
+        "xray:GetSamplingRules",
+        "xray:GetSamplingTargets",
+        "xray:GetSamplingStatisticSummaries",
+        "cloudwatch:PutMetricData",
+        "ec2:DescribeVolumes",
+        "ec2:DescribeTags",
+        "ssm:GetParameters"
+    ]
+
+    resources = [
+       "*",
+    ]
+  }
+}
+
+resource "aws_iam_role_policy" "api_ecs_execution_role_policy_attach_otel" {
+  name   = "${var.service_name}-api-access-otel"
+  role   = aws_iam_role.ecs_execution_role.id
+  policy = data.aws_iam_policy_document.api_ecs_to_otel_access.json
+}
+
 ########################################################################
 # LOGGING
 ########################################################################
