@@ -129,8 +129,8 @@ resource "aws_security_group" "default" {
 
   ingress {
     description = "ICMP default rule for pinging"
-    from_port = "8888"
-    to_port   = "8888"
+    from_port = "8"
+    to_port   = "8"
     protocol  = "icmp"
     self      = true
   }
