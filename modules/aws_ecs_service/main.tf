@@ -22,7 +22,7 @@ data "aws_iam_policy_document" "ecs_assume_role_policy" {
 }
 
 resource "aws_iam_role" "ecs_execution_role" {
-  name               = "${var.service_name}_ecs_task_execution_role"
+  name               = "${var.service_name}-${var.environment}_ecs_task_execution_role"
   assume_role_policy = data.aws_iam_policy_document.ecs_assume_role_policy.json
   tags               = var.tags
 }
@@ -44,7 +44,7 @@ data "aws_iam_policy_document" "ecs_execution_attachment" {
 }
 
 resource "aws_iam_role_policy" "ecs_execution_role_policy" {
-  name   = "${var.service_name}_ecs_execution_role_policy"
+  name   = "${var.service_name}-${var.environment}_ecs_execution_role_policy"
   role   = aws_iam_role.ecs_execution_role.id
   policy = data.aws_iam_policy_document.ecs_execution_attachment.json
 }
@@ -81,7 +81,7 @@ data "aws_iam_policy_document" "ecs_ecr_access_attachment" {
 
 resource "aws_iam_role_policy" "ecs_ecr_access_role_policy" {
   count  = var.use_ecr ? 1 : 0
-  name   = "${var.service_name}_ecs_ecr_access_role_policy"
+  name   = "${var.service_name}-${var.environment}_ecs_ecr_access_role_policy"
   role   = aws_iam_role.ecs_execution_role.id
   policy = data.aws_iam_policy_document.ecs_ecr_access_attachment[0].json
 }
@@ -91,13 +91,13 @@ resource "aws_iam_role_policy" "ecs_ecr_access_role_policy" {
 # Security Groups
 ########################################################################
 resource "aws_security_group" "service" {
-  name        = "tf-${var.service_name}"
-  description = "${var.service_name} security group"
+  name        = "tf-${var.service_name}-${var.environment}"
+  description = "${var.service_name}-${var.environment} security group"
   vpc_id      = var.vpc_id
 
   tags = merge(
     {
-      Name = "tf-${var.service_name}"
+      Name = "tf-${var.service_name}-${var.environment}"
     },
     var.tags
   )
@@ -266,7 +266,7 @@ data "aws_iam_policy_document" "api_ecs_to_otel_access" {
 }
 
 resource "aws_iam_role_policy" "api_ecs_execution_role_policy_attach_otel" {
-  name   = "${var.service_name}-api-access-otel"
+  name   = "${var.service_name}-${var.environment}-api-access-otel"
   role   = aws_iam_role.ecs_execution_role.id
   policy = data.aws_iam_policy_document.api_ecs_to_otel_access.json
 }
