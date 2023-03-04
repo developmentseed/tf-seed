@@ -128,10 +128,14 @@ resource "aws_security_group" "default" {
   #depends_on  = [aws_vpc.vpc]
 
   ingress {
-    description = ""
-    from_port = "8080"
-    to_port   = "8080"
-    protocol  = "tcp"
+    for_each   = {
+      for index, rule in var.ingress_rules_for_vpc_default_sg:
+      rule.primary_key => rule # this works b/c one key has to be primary
+    }
+    description = each.value.description
+    from_port = each.value.from_port
+    to_port   = each.value.to_port
+    protocol  = each.value.protocol
     self      = true
   }
 
