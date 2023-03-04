@@ -128,14 +128,10 @@ resource "aws_security_group" "default" {
   #depends_on  = [aws_vpc.vpc]
 
   ingress {
-    for_each   = {
-      for index, rule in var.ingress_rules_for_vpc_default_sg:
-      rule.primary_key => rule # this works b/c one key has to be primary
-    }
-    description = each.value.description
-    from_port = each.value.from_port
-    to_port   = each.value.to_port
-    protocol  = each.value.protocol
+    description = "ICMP default rule for pinging"
+    from_port = "8888"
+    to_port   = "8888"
+    protocol  = "icmp"
     self      = true
   }
 

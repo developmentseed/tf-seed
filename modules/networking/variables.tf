@@ -34,35 +34,3 @@ variable "tags" {
   default     = {}
   description = "Optional tags to add to resources"
 }
-
-variable "ingress_rules_for_vpc_default_sg" {
-  #################################################
-  # EXAMPLE
-  #################################################
-  #  [
-  #    {
-  #      primary_key       = "1"
-  #      description       = ""
-  #      protocol          = "tcp"
-  #      from_port         = 5432
-  #      to_port           = 5432
-  #    },
-  #    {
-  #      primary_key       = "2"
-  #      description       = ""
-  #      protocol          = "tcp"
-  #      from_port         = 5000
-  #      to_port           = 5000
-  #    },
-  #  ]
-  #
-  type = list(object({
-    primary_key        = string
-    protocol           = string
-    description        = string
-    from_port          = number
-    to_port            = number
-  }))
-  default = []
-  description = "add ingress rules to default VPC security group"
-}
