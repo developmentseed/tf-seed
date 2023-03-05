@@ -1,6 +1,6 @@
 resource "aws_iam_user_policy" "deploy" {
   count  = var.enable_deploy_user ? 1 : 0
-  name   = "${var.registry_name}_deploy"
+  name   = "${var.registry_name}-${var.environment}-deploy-policy"
   user   = var.iam_deploy_username
   policy = data.aws_iam_policy_document.deploy.json
 }
