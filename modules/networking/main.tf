@@ -140,6 +140,10 @@ resource "aws_security_group_rule" "ingress" {
   protocol  = "icmp"
   security_group_id = aws_security_group.default.id
   source_security_group_id = aws_security_group.default.id
+  lifecycle {
+    # Necessary if changing 'name' or 'name_prefix' properties.
+    create_before_destroy = true
+  }
 }
 
 resource "aws_security_group_rule" "egress" {
@@ -150,4 +154,8 @@ resource "aws_security_group_rule" "egress" {
   protocol    = "-1"
   security_group_id = aws_security_group.default.id
   cidr_blocks = ["0.0.0.0/0"]
+  lifecycle {
+    # Necessary if changing 'name' or 'name_prefix' properties.
+    create_before_destroy = true
+  }
 }
