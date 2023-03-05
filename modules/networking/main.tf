@@ -127,22 +127,27 @@ resource "aws_security_group" "default" {
   vpc_id      = aws_vpc.vpc.id
   #depends_on  = [aws_vpc.vpc]
 
-  ingress {
-    description = "ICMP default rule for pinging"
-    from_port = "8"
-    to_port   = "8"
-    protocol  = "icmp"
-    self      = true
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   tags = merge({
     Project     = var.project_name
   }, var.tags)
+}
+
+resource "aws_security_group_rule" "ingress" {
+  description = "ICMP default rule for pinging"
+  type      = "ingress"
+  from_port = "8"
+  to_port   = "8"
+  protocol  = "icmp"
+  security_group_id = aws_security_group.default.id
+  source_security_group_id = aws_security_group.default.id
+}
+
+resource "aws_security_group_rule" "egress" {
+  description = "all output for cidr 0.0.0.0"
+  type        = "egress"
+  from_port   = 0
+  to_port     = 0
+  protocol    = "-1"
+  security_group_id = aws_security_group.default.id
+  cidr_blocks = ["0.0.0.0/0"]
 }
