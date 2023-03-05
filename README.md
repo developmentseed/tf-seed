@@ -27,7 +27,7 @@ we can reference this module like so:
 # file: vpc.tf
 module "networking" {
   source               = "github.com/developmentseed/tf-seed/modules/networking"
-  project_name         = "captainbezerko"
+  project_name         = "captainberserko"
   env                  = "staging"
   vpc_cidr             = "10.0.0.0/16"
   public_subnets_cidr  = ["10.0.1.0/24", "10.0.2.0/24"]
@@ -48,7 +48,7 @@ the `networking` module output variable to my new resource):
 ```terraform
 module "networking" {
   source               = "github.com/developmentseed/tf-seed/modules/networking"
-  project_name         = "captainbezerko"
+  project_name         = "captainberserko"
   env                  = "staging"
   vpc_cidr             = "10.0.0.0/16"
   public_subnets_cidr  = ["10.0.1.0/24", "10.0.2.0/24"]
