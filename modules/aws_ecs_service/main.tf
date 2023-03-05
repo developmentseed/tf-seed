@@ -123,7 +123,6 @@ resource "aws_security_group_rule" "rds_sg_allows_ecs_sg" {
     for index, rule in var.additional_sg_ingress_rules_for_vpc_default_sg:
     rule.primary_key => rule # this works b/c one key has to be primary
   }
-  description       = "Allow ESC to talk to RDS"
   security_group_id = each.value.vpc_default_sg_id
   type              = "ingress"
   from_port         = each.value.from_port
