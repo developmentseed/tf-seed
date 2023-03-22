@@ -56,6 +56,7 @@ resource "aws_subnet" "public_subnet" {
   tags = merge({
     Name        = "${var.project_name}-${var.env}-${element(var.availability_zones, count.index)}-public-subnet"
     Project     = var.project_name
+    Scope       = "public"
   }, var.tags)
 }
 
@@ -70,6 +71,7 @@ resource "aws_subnet" "private_subnet" {
   tags = merge({
     Name        = "${var.project_name}-${var.env}-${element(var.availability_zones, count.index)}-private-subnet"
     Project     = var.project_name
+    Scope       = "private"
   }, var.tags)
 }
 
@@ -80,6 +82,7 @@ resource "aws_route_table" "private" {
   tags = merge({
     Name        = "${var.project_name}-${var.env}-private-route-table"
     Project     = var.project_name
+    Scope       = "private"
   }, var.tags)
 }
 
@@ -90,6 +93,7 @@ resource "aws_route_table" "public" {
   tags = merge({
     Name        = "${var.project_name}-${var.env}-public-route-table"
     Project     = var.project_name
+    Scope       = "public"
   }, var.tags)
 }
 
