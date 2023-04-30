@@ -15,6 +15,11 @@ variable "enable_deploy_user" {
   default = true
 }
 
+variable "is_public" {
+  type    = bool
+  default = false
+}
+
 variable "iam_deploy_username" {}
 
 variable "tags" {
