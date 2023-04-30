@@ -7,14 +7,6 @@ Mostly Reusable Terraform Modules ;-)
 DevSeed, for better or worse, is an organization where developers will probably have to be competent in both 
 CDK and Terraform given the rate of project and staffing changes.
 
-Terraform's (TF) IAC perspective is "opinionated" and mostly "flat". 
-Other IAC tools often give developers a lot more freedom to create larger organizational patterns.
-While some of this is true for TF, its mostly "flat" perspective avoids a lot of conversations around "best practices".
-
-The perspective above is one reason why it's hard to create reusable DRY modules in TF and that's an okay thing. 
-Sometimes it's useful, especially for core AWS constructs, to try and be DRY -- hence this repository that might never
-be more than these two modules.
-
 ---
 
 ## How to Use This?
