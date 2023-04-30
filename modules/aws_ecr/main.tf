@@ -51,12 +51,6 @@ resource "aws_ecr_repository" "service" {
 
 resource "aws_ecrpublic_repository" "service" {
   count = var.is_public ? 1 : 0
-  name = "tf-${var.registry_name}-${var.environment}"
-  image_tag_mutability = var.mutable_image_tags ? "MUTABLE" : "IMMUTABLE"
-
-  image_scanning_configuration {
-    scan_on_push = false
-  }
-
+  repository_name = "tf-${var.registry_name}-${var.environment}"
   tags = var.tags
 }
