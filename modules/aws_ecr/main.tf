@@ -38,7 +38,7 @@ data "aws_iam_policy_document" "deploy" {
 }
 
 resource "aws_ecr_repository" "service" {
-  count = var.is_public ? 0: 1
+  count = var.is_public ? 0 : 1
   name = "tf-${var.registry_name}-${var.environment}"
   image_tag_mutability = var.mutable_image_tags ? "MUTABLE" : "IMMUTABLE"
 
@@ -50,7 +50,7 @@ resource "aws_ecr_repository" "service" {
 }
 
 resource "aws_ecrpublic_repository" "service" {
-  count = var.is_public ? 1: 0
+  count = var.is_public ? 1 : 0
   name = "tf-${var.registry_name}-${var.environment}"
   image_tag_mutability = var.mutable_image_tags ? "MUTABLE" : "IMMUTABLE"
 
