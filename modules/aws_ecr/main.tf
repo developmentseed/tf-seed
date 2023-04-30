@@ -1,3 +1,8 @@
+provider "aws" {
+  alias  = "us_east_1"
+  region = "us-east-1"
+}
+
 resource "aws_iam_user_policy" "deploy" {
   count  = var.enable_deploy_user ? 1 : 0
   name   = "${var.registry_name}-${var.environment}-deploy-policy"
@@ -50,6 +55,7 @@ resource "aws_ecr_repository" "service" {
 }
 
 resource "aws_ecrpublic_repository" "service" {
+  provider = aws.us_east_1
   count = var.is_public ? 1 : 0
   repository_name = "tf-${var.registry_name}-${var.environment}"
   tags = var.tags
