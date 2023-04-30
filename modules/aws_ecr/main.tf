@@ -13,6 +13,7 @@ resource "aws_iam_user_policy" "deploy" {
 data "aws_iam_policy_document" "deploy" {
   statement {
     actions = [
+      "ecr-public:*",
       "ecr:GetAuthorizationToken",
       "ecr:BatchCheckLayerAvailability",
       "ecr:GetDownloadUrlForLayer",
