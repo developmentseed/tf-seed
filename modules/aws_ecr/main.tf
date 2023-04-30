@@ -32,7 +32,7 @@ data "aws_iam_policy_document" "deploy" {
     ]
 
     resources = [
-      aws_ecr_repository.service.arn
+      var.is_public ? aws_ecrpublic_repository.service[0].arn : aws_ecr_repository.service[0].arn
     ]
   }
 }
